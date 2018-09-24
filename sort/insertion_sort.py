@@ -1,4 +1,4 @@
-# insertion sort
+# insertion sort O(n^2)
 
 from typing import List
 from typing import Any
