@@ -1,4 +1,4 @@
-# utility of operation in heap
+# heap sort O(nlgn)
 
 from math import floor
 from typing import List
@@ -43,7 +43,6 @@ def make_heap(heap: List[Any], cmp: Callable[[Any, Any], bool]):
 
 
 def heap_sort(heap: List[Any], cmp: Callable[[Any, Any], bool]) -> List[Any]:
-    # heap sort O(nlgn)
     tmp = list(heap)
     make_heap(tmp, cmp)
     sorted_array = []
