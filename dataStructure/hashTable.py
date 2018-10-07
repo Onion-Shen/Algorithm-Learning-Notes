@@ -49,7 +49,8 @@ class HashTable_linkedList(object):
             self.buckets[index] = linkedList
 
         for bucket in linkedList:
-            if bucket.key == key and bucket.value == value:
+            if bucket.key == key:
+                bucket.value = value
                 break
         else:
             linkedList.append(Bucket(key, value))
