@@ -58,6 +58,9 @@ class HashTable_linkedList(object):
 
         self.resize()
 
+    def __setitem__(self, key: Any, value: Any):
+        self.insert(key, value)
+
     def search(self, key: Any) -> Any:
         index = self.hash(key)
         if index < 0 or index > self.slots:
@@ -69,6 +72,9 @@ class HashTable_linkedList(object):
                 return bucket.value
 
         return None
+
+    def __getitem__(self, key: Any) -> Any:
+        return self.search(key)
 
     def delete(self, key: Any):
         index = self.hash(key)
