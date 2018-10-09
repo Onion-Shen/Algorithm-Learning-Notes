@@ -27,9 +27,9 @@ class LinkedList(object):
     def insert_head(self, key: Any):
         node = Node(key)
         head = self.head()
-        if head == self.dummy:
-            head.next = node
-            node.prev = head
+        if not head:
+            self.dummy.next = node
+            node.prev = self.dummy
         else:
             prev = head.prev
             prev.next = node
@@ -40,7 +40,7 @@ class LinkedList(object):
         return self.dummy.next
 
     def search(self, key: Any) -> Node:
-        tmp = self.dummy
+        tmp = self.head()
         while tmp:
             if tmp.key == key:
                 return tmp
@@ -58,8 +58,10 @@ class LinkedList(object):
             return
 
         prev, next = node.prev, node.next
-        prev.next = next
-        next.prev = prev
+        if prev:
+            prev.next = next
+        if next:
+            next.prev = prev
 
     def exchange(self, node1: Node, node2: Node):
         if node1 == node2:
