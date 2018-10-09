@@ -62,14 +62,23 @@ class LinkedList(object):
         next.prev = prev
 
     def exchange(self, node1: Node, node2: Node):
+        if node1 == node2:
+            return
+
         prev1, next1 = node1.prev, node1.next
         prev2, next2 = node2.prev, node2.next
 
-        node2.prev = prev1
+        prev1.next = node2
         node2.next = next1
+
+        prev2.next = node1
+        node1.next = next2
 
         node1.prev = prev2
         node1.next = next2
+
+        node2.prev = prev1
+        node2.next = next1
 
     def clear(self):
         self.dummy.next = None
