@@ -140,7 +140,6 @@ class RBTree(object):
                 node.parent.color = Color.BLACK
                 node.parent.parent.color = Color.RED
                 self.left_rotate(node.parent.parent)
-                
 
         self.root.color = Color.BLACK
 
@@ -154,8 +153,85 @@ class RBTree(object):
 
         v.parent = u.parent
 
-    def delete(self, node):
-        pass
+    def delete(self, node: Node):
+        y = node
+        y_original_color = y.color
+        x: Node = None
 
-    def delete_fixup(self, node):
-        pass
+        if node.left == self.leaf:
+            x = node.right
+            self.transplant(node, node.right)
+        elif node.right == self.leaf:
+            x = node.left
+            self.transplant(node, node.left)
+        else:
+            y = node.right.minimum()
+            y_original_color = y.color
+            x = y.right
+
+            if y.parent == node:
+                x.parent = y
+            else:
+                self.transplant(y, y.right)
+                y.right = node.right
+                y.right.parent = y
+
+            self.transplant(node, y)
+            y.left = node.left
+            y.left.parent = y
+            y.color = node.color
+
+        if y_original_color == Color.BLACK:
+            self.delete_fixup(x)
+
+    def delete_fixup(self, node: Node):
+        while node != self.leaf and node.color == Color.BLACK:
+            if node == node.parent.left:
+                w = node.parent.right
+
+                if w.color == Color.RED:
+                    w.color = Color.BLACK
+                    node.parent.color = Color.RED
+                    self.left_rotate(node.parent)
+                    w = node.parent.right
+
+                if w.left.color == Color.BLACK and w.right.color == Color.BLACK:
+                    w.color = Color.RED
+                    node = node.parent
+                elif w.right.color == Color.BLACK:
+                    w.left.color = Color.BLACK
+                    w.color = Color.RED
+                    self.right_rotate(w)
+                    w = node.parent.right
+
+                w.color = node.parent.color
+                node.parent.color = Color.BLACK
+                w.right.color = Color.BLACK
+                self.left_rotate(node.parent)
+                node = self.root
+
+            elif node == node.parent.right:
+                w = node.parent.left
+
+                if w.color == Color.RED:
+                    w.color = Color.BLACK
+                    node.parent.color = Color.RED
+                    self.right_rotate(node.parent)
+                    w = node.parent.left
+
+                if w.left.color == Color.BLACK and w.right.color == Color.BLACK:
+                    w.color = Color.RED
+                    node = node.parent
+                elif w.left.color == Color.BLACK:
+                    w.right.color = Color.BLACK
+                    w.color = Color.RED
+                    self.left_rotate(w)
+                    w = node.parent.left
+
+                w.color = node.parent.color
+                node.parent.color = Color.BLACK
+                w.left.color = Color.BLACK
+                self.right_rotate(node.parent)
+                node = self.root
+
+        node.color = Color.BLACK
