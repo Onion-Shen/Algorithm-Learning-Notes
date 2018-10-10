@@ -15,6 +15,7 @@ class Node(object):
         self.left: Node = None
         self.right: Node = None
         self.parent: Node = None
+        self.is_leaf = False
 
     def minimum(self):
         """
@@ -30,9 +31,9 @@ class Node(object):
         :rtype: Node
         """
         x = self
-        while x and k != x.key:
+        while x and not x.is_leaf and k != x.key:
             x = x.left if k < x.key else x.right
-        return x
+        return x if x and not x.is_leaf else None
 
 
 """
@@ -49,8 +50,12 @@ class RBTree(object):
     def __init__(self):
         self.root: Node = None
         self.leaf: Node = Node(None, Color.BLACK)
+        self.leaf.is_leaf = True
 
     def left_rotate(self, node: Node):
+        if not node or not node.right:
+            return
+
         y = node.right
         node.right = y.left
 
@@ -90,7 +95,7 @@ class RBTree(object):
         y = self.leaf
         x = self.root
 
-        while x != self.leaf:
+        while x and x != self.leaf:
             y = x
             x = x.left if node.key < x.key else x.right
         node.parent = y
@@ -123,8 +128,10 @@ class RBTree(object):
                     self.left_rotate(node)
 
                 node.parent.color = Color.BLACK
-                node.parent.parent.color = Color.RED
-                self.right_rotate(node.parent.parent)
+                grand_parent = node.parent.parent
+                if grand_parent:
+                    grand_parent.color = Color.RED
+                    self.right_rotate(grand_parent)
             elif node.parent == node.parent.parent.right:
                 y = node.parent.parent.left
 
@@ -138,8 +145,10 @@ class RBTree(object):
                     self.right_rotate(node)
 
                 node.parent.color = Color.BLACK
-                node.parent.parent.color = Color.RED
-                self.left_rotate(node.parent.parent)
+                grand_parent = node.parent.parent
+                if grand_parent:
+                    grand_parent.color = Color.RED
+                    self.left_rotate(grand_parent)
 
         self.root.color = Color.BLACK
 
