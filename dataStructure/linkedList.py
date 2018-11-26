@@ -105,3 +105,28 @@ class LinkedList(object):
             head = head.next
 
         return array.__str__()
+
+    def reverse(self):
+        cur = self.head()
+        if not cur:
+            return
+
+        pre: Node = None
+        nxt: Node = cur.next
+
+        # this is for the dummy head
+        cur.prev = None
+        cur.next = None
+
+        while nxt != None:
+            cur.prev = nxt
+
+            pre = cur
+            cur = nxt
+            if nxt:
+                nxt = nxt.next
+            
+            cur.next = pre
+
+        self.dummy.next = cur
+        cur.prev = self.dummy
