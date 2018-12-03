@@ -51,6 +51,33 @@ class Node(object):
 
         return y
 
+    def preorder_traversal(self):
+        if self:
+            print(self.key)
+            if self.left:
+                self.left.preorder_traversal()
+            if self.right:
+                self.right.preorder_traversal()
+
+    def inorder_traversal(self):
+        if self:
+            if self.left:
+                self.left.inorder_traversal()
+
+            print(self.key)
+
+            if self.right:
+                self.right.inorder_traversal()
+
+    def postorder_traversal(self):
+        if self:
+            if self.left:
+                self.left.postorder_traversal()
+            if self.right:
+                self.right.postorder_traversal()
+
+            print(self.key)
+
 
 class BST(object):
     def __init__(self):
