@@ -9,3 +9,4 @@ from dataStructure.heap import *
 from dataStructure.linkedList import *
 from dataStructure.LRUCache import *
 from dataStructure.RBTree import *
+from dataStructure.generalizedList import *
