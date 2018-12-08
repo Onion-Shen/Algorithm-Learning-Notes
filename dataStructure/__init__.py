@@ -10,3 +10,4 @@ from dataStructure.linkedList import *
 from dataStructure.LRUCache import *
 from dataStructure.RBTree import *
 from dataStructure.generalizedList import *
+from dataStructure.graphy import *
