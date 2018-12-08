@@ -78,6 +78,15 @@ class Node(object):
 
             print(self.key)
 
+    def is_left_leaf(self) -> bool:
+        return self.parent and self.parent.left == self
+
+    def is_right_leaf(self) -> bool:
+        return self.parent and self.parent.right == self
+
+    def is_root(self) -> bool:
+        return not self.parent
+
 
 class BST(object):
     def __init__(self):
