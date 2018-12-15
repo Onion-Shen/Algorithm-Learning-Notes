@@ -33,3 +33,19 @@ class ListGraphy(object):
 
             pb = ArcNode(i, self.adjlist[j].firstarc)
             self.adjlist[j].firstarc = pb
+
+
+class MatrixGraphy(object):
+    def __init__(self, vexnum: int, arcnum: int):
+        self.vexnum = vexnum
+        self.arcnum = arcnum
+
+        self.edge: List[List[int]] = [
+            [1 if x == y else None for x in range(vexnum)] for y in range(vexnum)]
+
+        for _ in range(arcnum):
+            # index and weight of a arc
+            i, j, w = map(lambda x: int(x), input("i,j,w = ").split(","))
+
+            self.edge[i - 1][j - 1] = w
+            self.edge[j - 1][i - 1] = w
