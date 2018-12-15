@@ -1,38 +1,16 @@
 from typing import List
-
-
-class ArcNode(object):
-    def __init__(self, adjvex: int, nextarc):
-        self.adjvex = adjvex
-        self.nextarc: ArcNode = nextarc
-
-
-class VexNode(object):
-    def __init__(self, vertex: int, firstarc: ArcNode):
-        self.vertex = vertex
-        self.firstarc = firstarc
+from dataStructure.linkedList import LinkedList
 
 
 class ListGraphy(object):
-    def __init__(self, vexnum: int, arcnum: int):
-        self.adjlist: List[VexNode] = []
+    def __init__(self, vexnum: int):
         self.vexnum = vexnum
-        self.arcnum = arcnum
+        self.adjList = [LinkedList() for _ in range(vexnum)]
 
-        for i in range(vexnum):
-            # i means the index of vertex
-            head = VexNode(i, None)
-            self.adjlist.append(head)
-
-        for _ in range(arcnum):
-            # indexes between a arc
-            i, j = map(lambda x: int(x), input("i,j = ").split(","))
-
-            pe = ArcNode(j, self.adjlist[i].firstarc)
-            self.adjlist[i].firstarc = pe
-
-            pb = ArcNode(i, self.adjlist[j].firstarc)
-            self.adjlist[j].firstarc = pb
+    def add_edge(self, v: int, w: int):
+        # add w to the list of node of v
+        linkedlist = self.adjList[v]
+        linkedlist.insert_tail(w)
 
 
 class MatrixGraphy(object):
