@@ -49,3 +49,21 @@ def BFS(graphy: ListGraphy, source: int):
                 visited[k] = True
                 queue.append(k)
             head = head.next
+
+
+def DFS(graphy: ListGraphy, source: int):
+    def DFS_visit(graphy: ListGraphy, source: int, visited: List[bool]):
+        visited[source] = True
+        print(source)
+
+        linkedlist = graphy.adjList[source]
+        head = linkedlist.dummy.next
+
+        while head:
+            k = head.key
+            if not visited[k]:
+                DFS_visit(graphy, k, visited)
+            head = head.next
+
+    visited = [False] * graphy.vexnum
+    DFS_visit(graphy, source, visited)
