@@ -6,11 +6,15 @@ class ListGraphy(object):
     def __init__(self, vexnum: int):
         self.vexnum = vexnum
         self.adjList = [LinkedList() for _ in range(vexnum)]
+        self.indegrees = [0] * vexnum
 
     def add_edge(self, v: int, w: int):
         # add w to the list of node of v
         linkedlist = self.adjList[v]
         linkedlist.insert_tail(w)
+
+        # change the indegree of vertex w
+        self.indegrees[w] += 1
 
 
 class MatrixGraphy(object):
@@ -67,3 +71,29 @@ def DFS(graphy: ListGraphy, source: int):
 
     visited = [False] * graphy.vexnum
     DFS_visit(graphy, source, visited)
+
+
+def topological_sort(graphy: ListGraphy):
+    queue: List[int] = list()
+    for i in range(graphy.vexnum):
+        if graphy.indegrees[i] == 0:
+            queue.append(i)
+
+    count = 0
+
+    while queue:
+        v = queue.pop(0)
+        print(v)
+        count += 1
+
+        linkedlist = graphy.adjList[v]
+        head = linkedlist.head()
+        while head:
+            key = head.key
+            graphy.indegrees[key] -= 1
+            if graphy.indegrees[key] == 0:
+                queue.append(key)
+            head = head.next
+
+    if count < graphy.vexnum:
+        print("there is a loop in the graphy")
