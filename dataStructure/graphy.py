@@ -27,3 +27,25 @@ class MatrixGraphy(object):
 
             self.edge[i - 1][j - 1] = w
             self.edge[j - 1][i - 1] = w
+
+
+def BFS(graphy: ListGraphy, source: int):
+    visited = [False] * graphy.vexnum
+    queue: List[int] = list()
+
+    visited[source] = True
+    queue.append(source)
+
+    while queue:
+        s = queue.pop(0)
+        print(s)
+
+        linkedlist = graphy.adjList[s]
+        head = linkedlist.dummy.next
+
+        while head:
+            k = head.key
+            if not visited[k]:
+                visited[k] = True
+                queue.append(k)
+            head = head.next
