@@ -1,4 +1,5 @@
 from typing import List
+from sys import maxsize
 from dataStructure.linkedList import LinkedList
 
 
@@ -22,15 +23,12 @@ class MatrixGraphy(object):
         self.vexnum = vexnum
         self.arcnum = arcnum
 
-        self.edge: List[List[int]] = [
-            [1 if x == y else None for x in range(vexnum)] for y in range(vexnum)]
+        self.matrix: List[List[int]] = [
+            [maxsize if x == y else 0 for x in range(vexnum)] for y in range(vexnum)]
 
-        for _ in range(arcnum):
-            # index and weight of a arc
-            i, j, w = map(lambda x: int(x), input("i,j,w = ").split(","))
-
-            self.edge[i - 1][j - 1] = w
-            self.edge[j - 1][i - 1] = w
+    def add_edge(self, i: int, j: int, w: int):
+        self.matrix[i][j] = w
+        self.matrix[j][i] = w
 
 
 def BFS(graphy: ListGraphy, source: int):
