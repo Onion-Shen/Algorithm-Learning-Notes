@@ -110,3 +110,34 @@ def Floyd_Warshall_shortest_path(graphy: MatrixGraphy):
 
     for row in matrix:
         print(row)
+
+
+def Dijkstra_shortest_path(graphy: MatrixGraphy, source: int):
+    vertex_num = graphy.vexnum
+    matrix = graphy.matrix
+
+    dist = list(matrix[source])
+    visited = [False] * vertex_num
+    visited[source] = True
+
+    min_val = -1
+    min_val_idx = -1
+
+    for _ in range(vertex_num):
+        min_val = maxsize
+
+        for j in range(vertex_num):
+            if not visited[j] and dist[j] < min_val:
+                min_val = dist[j]
+                min_val_idx = j
+
+        visited[min_val_idx] = True
+
+        for v in range(vertex_num):
+            val = matrix[min_val_idx][v]
+            if val < maxsize:
+                new_dist = dist[min_val_idx] + val
+                if dist[v] > new_dist:
+                    dist[v] = new_dist
+
+    print(dist)
