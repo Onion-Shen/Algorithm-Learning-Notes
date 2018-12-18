@@ -1,5 +1,6 @@
 from typing import List
 from sys import maxsize
+from copy import deepcopy
 from dataStructure.linkedList import LinkedList
 
 
@@ -24,11 +25,10 @@ class MatrixGraphy(object):
         self.arcnum = arcnum
 
         self.matrix: List[List[int]] = [
-            [maxsize if x == y else 0 for x in range(vexnum)] for y in range(vexnum)]
+            [0 if x == y else maxsize for x in range(vexnum)] for y in range(vexnum)]
 
     def add_edge(self, i: int, j: int, w: int):
         self.matrix[i][j] = w
-        self.matrix[j][i] = w
 
 
 def BFS(graphy: ListGraphy, source: int):
@@ -95,3 +95,18 @@ def topological_sort(graphy: ListGraphy):
 
     if count < graphy.vexnum:
         print("there is a loop in the graphy")
+
+
+def Floyd_Warshall_shortest_path(graphy: MatrixGraphy):
+    vertex_num = graphy.vexnum
+    matrix = deepcopy(graphy.matrix)
+
+    for k in range(vertex_num):
+        for i in range(vertex_num):
+            for j in range(vertex_num):
+                val = matrix[i][k] + matrix[k][j]
+                if matrix[i][j] > val:
+                    matrix[i][j] = val
+
+    for row in matrix:
+        print(row)
