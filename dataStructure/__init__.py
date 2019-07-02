@@ -12,3 +12,4 @@ from dataStructure.RBTree import *
 from dataStructure.generalizedList import *
 from dataStructure.graphy import *
 from dataStructure.skipList import *
+from dataStructure.AVLTree import AVLTree
